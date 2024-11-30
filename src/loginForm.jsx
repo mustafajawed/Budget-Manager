@@ -17,6 +17,8 @@ const LoginForm = () => {
         
         // Redirect to sign-in page if user is not signed in
         navigate("/");
+      }else{
+        navigate("/dashboard")
       }
     });
 
