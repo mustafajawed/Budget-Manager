@@ -6,8 +6,8 @@ import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 const SignUpForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [username, setUsername] = useState(""); // New state for username
-  const navigate = useNavigate(); // Hook to navigate
+  const [username, setUsername] = useState(""); 
+  const navigate = useNavigate(); 
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -19,16 +19,16 @@ const SignUpForm = () => {
 
       // Update the user's displayName with the username
       await updateProfile(user, {
-        displayName: username, // Setting the username as displayName
+        displayName: username,
       });
 
       console.log("Account created successfully!");
       console.log("User Details:", user);
       
       // Redirect to login page
-      navigate("/login"); // Make sure the path is correct for your login page
+      navigate("/login"); 
     } catch (error) {
-      alert(error.message); // Show error message
+      alert(error.message);
     }
   };
 
@@ -83,7 +83,7 @@ const SignUpForm = () => {
           type="text"
           placeholder="Enter your username"
           style={styles.input}
-          onChange={(e) => setUsername(e.target.value)} // Set username
+          onChange={(e) => setUsername(e.target.value)} 
           required
         />
         <input

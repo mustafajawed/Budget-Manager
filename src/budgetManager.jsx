@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from "react";
-import { useNavigate } from "react-router-dom"; // React Router for navigation
+import { useNavigate } from "react-router-dom"; 
 import {
   auth,
   db,
@@ -9,7 +9,7 @@ import {
   updateDoc,
   doc,
   deleteDoc,
-} from "./firebase"; // Import Firebase functions
+} from "./firebase"; 
 import { onAuthStateChanged, signOut } from "firebase/auth";
 
 const BudgetManager = () => {
@@ -18,25 +18,25 @@ const BudgetManager = () => {
   const [budgets, setBudgets] = useState([]);
   const [expenseName, setExpenseName] = useState("");
   const [expenseAmount, setExpenseAmount] = useState("");
-  const [expenseCategory, setExpenseCategory] = useState(""); // New state for category
+  const [expenseCategory, setExpenseCategory] = useState("");
   const [selectedBudgetIndex, setSelectedBudgetIndex] = useState(null);
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
-  const [filterActive, setFilterActive] = useState(false); // Track if filter is applied
-  const [user, setUser] = useState(null); // Store user information
+  const [filterActive, setFilterActive] = useState(false); 
+  const [user, setUser] = useState(null); 
   const navigate = useNavigate();
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (!user) {
-        navigate("/"); // Redirect to login if not authenticated
+        navigate("/"); 
       } else {
-        setUser(user); // Set user data once authenticated
-        loadUserData(user.uid); // Load user-specific budgets and expenses from Firestore
+        setUser(user); 
+        loadUserData(user.uid);
       }
     });
 
-    return () => unsubscribe(); // Cleanup on unmount
+    return () => unsubscribe();
   }, [navigate]);
 
   // Load user data from Firestore
@@ -46,7 +46,7 @@ const BudgetManager = () => {
     );
     const userBudgets = [];
     budgetsSnapshot.forEach((doc) => {
-      userBudgets.push({ ...doc.data(), id: doc.id }); // Include the document ID
+      userBudgets.push({ ...doc.data(), id: doc.id }); 
     });
     setBudgets(userBudgets);
   };
@@ -73,7 +73,7 @@ const BudgetManager = () => {
         collection(db, "users", user.uid, "budgets"),
         newBudget
       ); // Save the new budget to Firestore
-      setBudgets([...budgets, { ...newBudget, id: docRef.id }]); // Update local state with document ID
+      setBudgets([...budgets, { ...newBudget, id: docRef.id }]); 
       setBudgetName("");
       setTotalBudget("");
     } catch (error) {
@@ -111,7 +111,7 @@ const BudgetManager = () => {
     const newExpense = {
       name: expenseName,
       amount: expenseValue,
-      category: expenseCategory, // Include category
+      category: expenseCategory, 
       date: new Date().toISOString(),
     };
 
@@ -129,7 +129,7 @@ const BudgetManager = () => {
         "budgets",
         selectedBudget.id
       );
-      await updateDoc(budgetRef, updatedBudget); // Update Firestore with new expense
+      await updateDoc(budgetRef, updatedBudget);
       setBudgets((prevBudgets) => {
         const updatedBudgets = [...prevBudgets];
         updatedBudgets[selectedBudgetIndex] = updatedBudget;
@@ -144,7 +144,7 @@ const BudgetManager = () => {
     }
   };
 
-  // Other functions remain unchanged (e.g., deleting expenses, budgets, filtering, logout)
+
   // Delete an expense from a selected budget
   const handleDeleteExpense = async (budgetIndex, expenseIndex) => {
     const selectedBudget = budgets[budgetIndex];
@@ -167,7 +167,7 @@ const BudgetManager = () => {
         "budgets",
         selectedBudget.id
       );
-      await updateDoc(budgetRef, updatedBudget); // Update Firestore with updated budget
+      await updateDoc(budgetRef, updatedBudget);
       setBudgets((prevBudgets) => {
         const updatedBudgets = [...prevBudgets];
         updatedBudgets[budgetIndex] = updatedBudget;
@@ -190,8 +190,8 @@ const BudgetManager = () => {
         "budgets",
         selectedBudget.id
       );
-      await deleteDoc(budgetRef); // Delete the budget from Firestore
-      setBudgets(budgets.filter((_, index) => index !== budgetIndex)); // Remove budget from local state
+      await deleteDoc(budgetRef);
+      setBudgets(budgets.filter((_, index) => index !== budgetIndex)); 
     } catch (error) {
       console.error("Error deleting budget: ", error);
     }
@@ -202,7 +202,7 @@ const BudgetManager = () => {
     try {
       await signOut(auth);
       console.log("User logged out successfully.");
-      navigate("/"); // Redirect to login page
+      navigate("/");
     } catch (error) {
       console.error("Error logging out: ", error.message);
     }
@@ -211,7 +211,7 @@ const BudgetManager = () => {
   // Filter expenses by date
   const filterExpensesByDate = () => {
     if (!filterActive || !startDate || !endDate) {
-      return budgets; // Return all budgets if filter is inactive
+      return budgets; 
     }
 
     const start = new Date(startDate);
@@ -365,7 +365,8 @@ const BudgetManager = () => {
       margin: "10px 20px",
     },
     exphead: {
-      backgroundColor: "red",
+      backgroundColor: "black",
+      color:"white",
       borderRadius: "10px",
       padding: "10px",
     },
